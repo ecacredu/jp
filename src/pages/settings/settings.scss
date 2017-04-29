@@ -1,0 +1,56 @@
+settings{
+  
+.selectBoxButton{
+    ion-item{
+        z-index: 232323;
+        .item-inner{
+            padding-right:3px !important;
+            border: 0 !important; 
+            .input-wrapper{
+                .label-md{
+                    color:#403f2e;
+                    font-size:20px;
+                    margin: 0;
+                }
+                .select-md{
+                   padding: 0;
+                   .select-placeholder{
+                       display: none;
+                   }
+                   .select-icon{
+                       display: none;
+                   }
+                   .item-cover{
+                       padding: 0;
+                   }
+                }
+            }
+        }
+    }
+}
+.select-text {
+    display: none;
+}
+
+ion-label {
+    white-space: normal;
+}
+ .item-inner > ion-icon {
+    font-size: 2.5rem;
+}
+.fab-md-light {
+    color: #ffffff;
+    background-color: #656f22;
+    box-shadow: none;
+    }
+.fab ion-icon {
+    font-size: 3em;
+    }
+.item-md h2 {
+    margin: 2px 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #656f22;
+}
+    
+}

@@ -1,0 +1,50 @@
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      New Post
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+ 
+<ion-content padding>
+  <div >
+<ion-list>
+
+  <ion-item>
+    <!--<ion-label>City</ion-label>-->
+    <ion-select placeholder="Select City" [(ngModel)]="selectedCity">
+      <ion-option *ngFor="let cM of redditService.citiesMajor" [value]="cM.id">{{cM.name}}</ion-option>
+      <ion-option *ngFor="let c of redditService.cities" [value]="c.id">{{c.name}}</ion-option>
+    </ion-select>
+  </ion-item>
+  
+
+  <ion-item>
+    <ion-input type="text" [(ngModel)]="postTitle" placeholder="Title"></ion-input>
+  </ion-item>
+
+  <img *ngIf="selectedImage != undefined" [src]="dom.bypassSecurityTrustUrl(selectedImage)" class="selectedImage" [hidden]="selectedImage === null">
+  <h6 [hidden]="selectedImage !== null">Please Select Image!</h6>
+    <button block ion-button color="dark" icon-left class="image-up" (click)="presentActionSheet()">
+        <ion-icon name="camera"></ion-icon>Select Image
+      </button>
+
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="postLink" placeholder="Youtube video link(if any)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" [(ngModel)]="events" placeholder="Events"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="tel" [(ngModel)]="contact" placeholder="Contact Number"></ion-input>
+    </ion-item>
+  <ion-item>
+    <ion-textarea [(ngModel)]="postContent" rows="5" placeholder="Enter content here..."></ion-textarea>
+  </ion-item>
+
+<button (click)="post()" ion-button outline >Submit</button>
+</ion-list>
+
+</div>   
+</ion-content>

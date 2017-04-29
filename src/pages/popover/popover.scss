@@ -1,0 +1,32 @@
+.popover-md .popover-content {
+    top: 12px;
+    left: 100px;
+    width: 213px;
+}
+
+page-popover {
+.list {
+    margin: 0px 0px 0px 0px;
+}
+ion-app.md [padding], ion-app.md [padding] .scroll-content {
+    padding: 0;
+}
+.item {
+    margin-left: 0%;
+    width: 100%;
+    border: none;
+    font-size: 1.5rem;
+}
+
+ .item-md ion-icon[item-left], .item-md ion-icon[item-right] {
+    font-size: 1.7em;
+    margin-top: 0;
+    margin-bottom: 0;
+    color:#403f2e;
+}   
+
+.label-md {
+    margin: 12px 8px 13px 0px;
+}
+
+}

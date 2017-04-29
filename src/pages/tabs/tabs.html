@@ -1,0 +1,10 @@
+<ion-tabs #tabs>
+  <ion-tab [root]="tab1Root" [rootParams]="search" tabTitle="Scrolls" #homeTab></ion-tab>
+  <ion-tab [root]="tab2Root" [rootParams]="search" tabTitle="Volunteers"></ion-tab>
+</ion-tabs>
+<div [ngClass]="{'searchOpen':d.searchOpen}" class="search">
+  <ion-searchbar #search placeholder="Search for scrolls..." [showCancelButton]="true" animated="true"
+    (ionFocus)="onFocus($event)" (ionInput)="onInput($event)" (ionCancel)="onCancel($event)">
+  </ion-searchbar>
+  <!--<ion-input placeholder="&#xf375; Search for Restaurants,Dishes,Cuisines etc" type="text"></ion-input>-->
+</div>

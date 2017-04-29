@@ -1,0 +1,65 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Scroll
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="detail-content">
+
+  <ion-card-header>
+    {{article.title}}
+  </ion-card-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col width-50  style="margin-left: 3%;">
+          <img-loader [src]="article.image" useImg></img-loader>
+      </ion-col>
+      <ion-col width-50>
+        <!--<p class="date"> Date</p>-->
+        <ion-buttons end>
+          <!--<button ion-button icon-only (click)="share('fb')">
+       <ion-icon name="logo-facebook"></ion-icon>
+       </button>
+      <button ion-button icon-only (click)="share('twitter')">
+          <ion-icon name="logo-twitter"></ion-icon>
+      </button>-->
+          <button ion-button icon-only (click)="share('general')">
+          <ion-icon name="md-share-alt"></ion-icon>
+      </button>
+        </ion-buttons>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div class="body" innerHTML="  {{article.content}} ">
+
+
+  </div>
+   <iframe style="width:90%; margin: 2% 0% 5% 5%;height: 30vh;" *ngIf="article.postvideolink != ''" [src]="url"></iframe>
+  <form (ngSubmit)="postComment()">
+    <ion-list>
+      <ion-item>
+        <ion-input type="text" [(ngModel)]="todo" name="title" placeholder="Your Comment here.." minlength="4" required></ion-input>
+      </ion-item>
+      <button class="submit-btn" ion-button outline>Submit</button>
+    </ion-list>
+  </form>
+
+
+  <ion-grid class="commentGrid" *ngFor="let comment of comments | async">
+    <ion-row style="margin-top: 10%;">
+      <ion-col width-10>
+        <ion-icon name="person"></ion-icon>
+      </ion-col>
+      <ion-col width-90 class="user">
+        <p>{{comment.name==''?'Anonymous':comment.name}}</p>
+      </ion-col>
+    </ion-row>
+    <p class="comment">{{comment.comment}}</p>
+  </ion-grid>
+
+
+
+
+</ion-content>

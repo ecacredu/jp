@@ -1,0 +1,29 @@
+page-myvolunteers {
+    ion-content{
+        padding-bottom: 2em;
+    }
+.select-text {
+    display: none;
+}
+
+ion-label {
+    white-space: normal;
+}
+ .item-inner > ion-icon {
+    font-size: 2.5rem;
+}
+.fab-md-light {
+    color: #ffffff;
+    background-color: #656f22;
+    box-shadow: none;
+    }
+.fab ion-icon {
+    font-size: 3em;
+    }
+.item-md h2 {
+    margin: 2px 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #656f22;
+}
+}

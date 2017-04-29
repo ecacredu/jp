@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Scrolls</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="article-content" (click)="changeFocus()">
+  
+<ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+<div *ngIf="items!=undefined">
+  <ion-card *ngFor="let item of items | search:redditService.searchvalue | currentUser:currentUser " (click)="openPage(item)">
+    <!--{{item | json}}-->
+    <ion-card-header>
+      {{item.title}}
+    </ion-card-header>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-50 [ngStyle]="{'background-image': 'url('+item.image+')'}" style="background-size: cover;background-position: center">
+
+        </ion-col>
+        <ion-col width-50>
+
+          <div class="content-para" innerHTML="  {{item.content}} ">
+
+          </div>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
+  
+<div  style="padding:1em;" *ngIf="items!=undefined && items.length">
+  
+      <button style="margin-top:1em;" class="submit-btn" (click)="postScroll()" color="jp-primary" ion-button block>Add new scroll</button>
+ 
+</div>
+
+</ion-content>

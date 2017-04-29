@@ -1,0 +1,30 @@
+<!--<ion-header>
+
+  <ion-navbar>
+    <ion-title>
+      <img src="http://www.joinpolitics.in/images/logo_mini.jpg"/>
+    </ion-title>
+  </ion-navbar>
+
+</ion-header>-->
+
+
+<ion-content padding>
+  <div class="logo">
+    <img src="assets/img/logo.jpg" />
+  </div>
+
+  <ion-list>
+    <form class="veri" [formGroup]="veri" (ngSubmit)="verify()">
+      <ion-item>
+        <ion-label floating>Enter your Mobile Number</ion-label>
+        <ion-input type="tel" formControlName="PhoneNo" maxlength="10"></ion-input>
+      </ion-item>
+      <small [hidden]="veri.controls.PhoneNo.valid || (veri.controls.PhoneNo.pristine && !submitted)"> </small>
+
+      <button class="submitButton" ion-button outline type="submit" [disabled]="!veri.valid">Submit</button>
+    </form>
+  </ion-list>
+
+
+</ion-content>

@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My Volunteers</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content (click)="changeFocus()">
+
+<ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="posts!=undefined">
+    <ion-item *ngFor="let m of posts | search:redditService.searchvalue | currentUser:currentUser" (click)="openPage(m)">
+      <ion-thumbnail item-left>
+        <img src="{{m.image}}">
+      </ion-thumbnail>
+      <h2>{{m.title}}</h2>
+      <ion-icon item-right name="ios-arrow-forward"></ion-icon>
+    </ion-item>
+  </ion-list>
+
+  
+<div style="padding:1em;" class="submit-btn" *ngIf="posts!=undefined && posts.length">
+  
+      <button style="margin-top:1em;" class="submit-btn" (click)="postVolunteer()" color="jp-primary" ion-button block>Add new volunteer</button>
+ 
+</div>
+  <!--<ion-fab right bottom>
+    <button ion-fab color="light" (click)="newblog()"><ion-icon name="add-circle"></ion-icon></button>
+    
+  </ion-fab>-->
+
+</ion-content>

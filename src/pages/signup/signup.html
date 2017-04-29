@@ -1,0 +1,42 @@
+<!--<ion-header>
+
+  <ion-navbar>
+    <ion-title>signup</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content padding>
+  <div class="logo">
+    <img src="assets/img/logo.jpg" />
+  </div>
+  <!--(ngSubmit)="login()" #registerForm="ngForm"-->
+  <form>
+    <ion-list>
+
+      <form class="veri" [formGroup]="veri" (ngSubmit)="verify()">
+        <ion-item>
+          <ion-label floating>Name</ion-label>
+          <ion-input type="text" formControlName="user_name"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>PhoneNo</ion-label>
+          <ion-input type="tel" formControlName="user_mobile" maxlength="10"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Email Id</ion-label>
+          <ion-input type="email" formControlName="user_email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>City</ion-label>
+          <ion-input type="text" formControlName="user_address"></ion-input>
+        </ion-item>
+
+        <button class="submitButton" ion-button outline type="submit" [disabled]="!veri.valid">Submit</button>
+      </form>
+
+    </ion-list>
+
+  </form>
+</ion-content>

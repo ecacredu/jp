@@ -1,0 +1,86 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Join Politics
+    </ion-title>
+
+
+    <ion-buttons end>
+      <!--<button ion-button icon-only (click)="openSearch()">
+       <ion-icon name="md-search"></ion-icon>
+       </button>-->
+
+      <!--<button ion-button class="selectBoxButton">
+      <ion-item>
+      <ion-label>
+        <ion-icon md="md-pin"></ion-icon>
+      </ion-label>
+      <ion-select placeholder="Select City" [(ngModel)]="redditService.frontCity">
+        <ion-option *ngFor="let cM of redditService.citiesMajor" [value]="cM.id">{{cM.name}}</ion-option>
+        <ion-option *ngFor="let c of redditService.cities" [value]="c.id">{{c.name}}</ion-option>
+      </ion-select>
+    </ion-item>
+       </button>-->
+      <button ion-button icon-only (click)="shareApp()">
+        <ion-icon name="share"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="presentPopover($event)">
+        <ion-icon name="md-more"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="article-content" (click)="changeFocus()">
+
+ <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="bubbles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+<!--| city:redditService.frontCity -->
+
+<ion-list>
+      <ion-card *ngFor="let item of redditService.items | search:redditService.searchvalue" (click)="openPage(item)">
+      <ion-card-header>
+        {{item.title}}
+      </ion-card-header>
+      <ion-grid>
+        <!--[ngStyle]="{'background-image': 'url('+item.image+')'}"  style="background-size: cover;background-position: center"-->
+        <ion-row>
+          <ion-col width-50>
+          <img-loader [src]="item.image" backgroundSize="cover"></img-loader>
+          </ion-col>
+          <ion-col width-50>
+            <!--<p class="date"> Date</p>-->
+            <div class="content-para" innerHTML="  {{item.content}} ">
+
+            </div>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+
+    
+</ion-list>
+
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content 
+        loadingSpinner="crescent"
+        loadingText="Loading more data..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab right bottom>
+    <button ion-fab color="light"><ion-icon name="add-circle"></ion-icon></button>
+     <ion-fab-list side="left">
+      <button ion-fab  (click)="newpostblog()"> New Scroll</button>
+      <button ion-fab (click)="newblog()">New Post</button>
+    </ion-fab-list>
+  </ion-fab>
+
+
+</ion-content>
