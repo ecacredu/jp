@@ -1,6 +1,6 @@
 <ion-tabs #tabs>
-  <ion-tab [root]="tab1Root" [rootParams]="search" tabTitle="Scrolls" #homeTab></ion-tab>
-  <ion-tab [root]="tab2Root" [rootParams]="search" tabTitle="Volunteers"></ion-tab>
+  <ion-tab [root]="tab1Root" [rootParams]="search" tabTitle="News" #homeTab></ion-tab>
+  <ion-tab [root]="tab2Root" [rootParams]="search" tabTitle="Petitions"></ion-tab>
 </ion-tabs>
 <div [ngClass]="{'searchOpen':d.searchOpen}" class="search">
   <ion-searchbar #search placeholder="Search for scrolls..." [showCancelButton]="true" animated="true"

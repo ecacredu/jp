@@ -61,6 +61,7 @@ export class RedditService {
     }
 
     updatePosts(count, next) {
+        console.log("update post");
         let temp = [];
         // console.log('length : ' + this.volunteerRepo.length);
         // console.log('buyers : ' + this.verifiedBuyersData[0]);

@@ -148,7 +148,7 @@ export class ArticlePage {
     });
   }
   ngOnInit() {
-    // this.getPosts();
+    // this.redditService.getPosts();
 
 
     if (this.redditService.articleRepo != undefined && this.redditService.articleRepo.length != 0) {
@@ -157,18 +157,18 @@ export class ArticlePage {
       });
 
     } else {
-      // this.loading = this.loadingCtrl.create({
-      //   spinner: 'bubbles',
-      //   content: 'Please wait...'
+      this.loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'Please wait...'
 
-      // });
+      });
 
-      // this.loading.present();
-      // this.redditService.getPosts().then((res) => {
-      //   this.loading.dismiss();
-      // }).catch(() => {
-      //   this.loading.dismiss();
-      // });
+      this.loading.present();
+      this.redditService.getPosts().then((res) => {
+        this.loading.dismiss();
+      }).catch(() => {
+        this.loading.dismiss();
+      });
 
 
     }
@@ -276,7 +276,6 @@ export class ArticlePage {
 
   }
 
-
-
+ 
 
 }   
