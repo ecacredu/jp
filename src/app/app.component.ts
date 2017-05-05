@@ -1,6 +1,7 @@
 import { Component , ViewChild } from '@angular/core';
 import { Platform , NavController } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
 
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
@@ -28,7 +29,7 @@ export class MyApp {
    rootPage:any ;
    @ViewChild('rootNav') nav: NavController;
 
-  constructor(platform: Platform , public reddit:RedditService,storage: Storage,private imageLoaderConfig: ImageLoaderConfig) {
+  constructor(platform: Platform , public reddit:RedditService,public statusBar: StatusBar,public splashScreen: SplashScreen,storage: Storage,private imageLoaderConfig: ImageLoaderConfig) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -37,6 +38,7 @@ export class MyApp {
 
       this.reddit.getPosts();
       this.reddit.getvolunteer();
+      this.reddit.initOneSignal();
       storage.get('user').then((val) => {
        console.log('Your name is', val);
        if(val!=null && val!=undefined){
@@ -55,8 +57,8 @@ export class MyApp {
      })
 
       // this.rootPage=TabsPage;
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      this.statusBar.styleDefault();
+      this.splashScreen.hide();
     });
   }
 }

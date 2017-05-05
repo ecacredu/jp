@@ -3,7 +3,7 @@ import { NavController, LoadingController, NavParams, PopoverController, Tabs, P
 import { RedditService } from '../../providers/reddit.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Http, Headers } from '@angular/http';
-import { SocialSharing } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { Storage } from '@ionic/storage';
 
 import { DetailsPage } from '../details/details';
@@ -37,7 +37,7 @@ export class ArticlePage {
   public selectedCity = '';
   public tabs: Tabs;
 
-  constructor(public http: Http, public navCtrl: NavController, public platform: Platform, public storage: Storage, public navParams: NavParams, public dom: DomSanitizer, private redditService: RedditService, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
+  constructor(public http: Http, public navCtrl: NavController,public socialShare:SocialSharing, public platform: Platform, public storage: Storage, public navParams: NavParams, public dom: DomSanitizer, private redditService: RedditService, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
     // this.getDefaults();
     this.search = navParams.data;
   }
@@ -104,6 +104,50 @@ export class ArticlePage {
 
   }
 
+  cityChange(ev: any) {
+    // Reset items back to all of the items
+
+    // set val to the value of the searchbar
+    // let val = ev.target.value;
+    console.log(ev);
+    // if the value is an empty string don't filter the items
+
+
+    if (ev != undefined && ev != null && ev != '') {
+      this.filterCount = 10;
+      this.filtering();
+    } else {
+      this.redditService.updateItems(this.a, 0);
+      this.filtered = false;
+      this.filterCount = 10;
+    }
+  }
+
+  filtering() {
+    let temp = this.redditService.items;
+    console.log('before filtering' + temp.length);
+    temp = this.filterList(this.filterCount).filter((item) => {
+      if(item == undefined){
+        return;
+      }
+      return ((item.cityid == undefined || item.cityid == this.redditService.frontCity || this.redditService.frontCity == undefined || this.redditService.frontCity == null || this.redditService.frontCity == '231234234'));
+    });
+    console.log('After filtering' + temp.length);
+    this.filtered = true;
+    this.redditService.items = temp;
+
+  }
+
+  filterList(count) {
+
+    let tf = [];
+    for (let i = 0; i < count; i++) {
+      tf.push(this.redditService.articleRepo[i]);
+    }
+    console.log('returning' + tf.length);
+    return tf;
+  }
+
   shareApp() {
     var options = {
       message: 'Join Politics',
@@ -112,7 +156,7 @@ export class ArticlePage {
       chooserTitle: 'Pick an app'
     }
 
-    SocialSharing.shareWithOptions(options).then((res) => {
+    this.socialShare.shareWithOptions(options).then((res) => {
       console.log(res);
     });
   }
@@ -157,17 +201,17 @@ export class ArticlePage {
       });
 
     } else {
-      this.loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'Please wait...'
+      // this.loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'Please wait...'
 
-      });
+      // });
 
-      this.loading.present();
+      // this.loading.present();
       this.redditService.getPosts().then((res) => {
-        this.loading.dismiss();
+        // this.loading.dismiss();
       }).catch(() => {
-        this.loading.dismiss();
+        // this.loading.dismiss();
       });
 
 

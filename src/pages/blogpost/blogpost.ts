@@ -2,7 +2,10 @@ import { Component } from '@angular/core';
 import { NavController , NavParams , ActionSheetController, ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
 
 import { RedditService } from '../../providers/reddit.service';
-import { Camera, File, Transfer, FilePath } from 'ionic-native';
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { Transfer, FileUploadOptions, TransferObject } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
 import { DomSanitizer } from '@angular/platform-browser';
 
 import { Storage } from '@ionic/storage';
@@ -26,7 +29,19 @@ export class BlogpostPage {
   public type='';
   public selectedCity='';
 
-  constructor(public navCtrl: NavController,public navParams: NavParams,public storage: Storage, public dom: DomSanitizer, private redditService: RedditService, public actionSheetCtrl: ActionSheetController, public toastCtrl: ToastController, public platform: Platform, public loadingCtrl: LoadingController) {}
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              public storage: Storage, 
+              public camera: Camera,
+              public file: File,
+              public transfer: Transfer,
+              public filePath: FilePath,
+              public dom: DomSanitizer, 
+              private redditService: RedditService, 
+              public actionSheetCtrl: ActionSheetController, 
+              public toastCtrl: ToastController, 
+              public platform: Platform, 
+              public loadingCtrl: LoadingController) {}
  
 
  ionViewWillEnter(){
@@ -92,13 +107,13 @@ export class BlogpostPage {
         {
           text: 'Load from Library',
           handler: () => {
-            this.takePicture(Camera.PictureSourceType.PHOTOLIBRARY);
+            this.takePicture(this.camera.PictureSourceType.PHOTOLIBRARY);
           }
         },
         {
           text: 'Use Camera',
           handler: () => {
-            this.takePicture(Camera.PictureSourceType.CAMERA);
+            this.takePicture(this.camera.PictureSourceType.CAMERA);
           }
         },
         {
@@ -114,11 +129,11 @@ public takePicture(sourceType) {
   // Create options for the Camera Dialog
   var options = {
     sourceType: sourceType,
-    destinationType:Camera.DestinationType.DATA_URL
+    destinationType:this.camera.DestinationType.DATA_URL
   };
  
   // Get the data of an image
-  Camera.getPicture(options).then((imagePath) => {
+  this.camera.getPicture(options).then((imagePath) => {
 
     this.selectedImage='data:image/*;base64,'+imagePath;
     // console.log(this.selectedImage);
@@ -149,7 +164,7 @@ private createFileName() {
  
 // Copy the image to a local folder
 private copyFileToLocalDir(namePath, currentName, newFileName) {
-  File.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+  this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
     this.lastImage = newFileName;
   }, error => {
     this.presentToast('Error while storing file.');
@@ -185,7 +200,7 @@ public uploadImage() {
   // File name only
   var filename = 'big'+time+'_'+this.lastImage;
  
-  var options = {
+  let options: FileUploadOptions = {
     fileKey: "file",
     fileName: filename,
     chunkedMode: false,
@@ -193,7 +208,7 @@ public uploadImage() {
     params : {'fileName': filename}
   };
  
-  const fileTransfer = new Transfer();
+  const fileTransfer: TransferObject = this.transfer.create();
  
   this.loading = this.loadingCtrl.create({
     spinner: 'bubbles',

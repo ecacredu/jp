@@ -14,6 +14,6 @@ export class CityPipe {
         value = [];
     }
 
-    return value.filter((item)=>( item.cityid==args || args==undefined || args==null || args=='231234234'));
+    return value.filter((item)=>( item==undefined || item.cityid==args || args==undefined || args==null || args=='231234234'));
   }
 }

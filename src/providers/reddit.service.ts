@@ -4,8 +4,9 @@ import 'rxjs/add/operator/map';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/Rx';
-import { SocialSharing } from 'ionic-native';
+import { OneSignal } from '@ionic-native/onesignal';
 import { ToastController, LoadingController } from 'ionic-angular';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Injectable()
 export class RedditService {
@@ -31,7 +32,11 @@ export class RedditService {
     { id: "4", name: "Bengaluru" },
     { id: "5", name: "Chennai" }];
 
-    constructor(http: Http, private toastCtrl: ToastController, public loadingCtrl: LoadingController) {
+    constructor(http: Http, 
+                private oneSignal: OneSignal, 
+                private toastCtrl: ToastController, 
+                public socialShare: SocialSharing,
+                public loadingCtrl: LoadingController) {
         this.http = http;
         this.baseUrl = 'http://www.joinpolitics.in/application/';
     }
@@ -291,24 +296,40 @@ export class RedditService {
 
         if (type == 'fb') {
 
-            SocialSharing.shareViaFacebook(message, image, url).then((res) => {
+            this.socialShare.shareViaFacebook(message, image, url).then((res) => {
                 console.log(res);
             });
 
         } else if (type == 'twitter') {
 
-            SocialSharing.shareViaTwitter(message, image, url).then((res) => {
+            this.socialShare.shareViaTwitter(message, image, url).then((res) => {
                 console.log(res);
             });
 
         } else if (type == 'general') {
 
-            SocialSharing.shareWithOptions(options).then((res) => {
+            this.socialShare.shareWithOptions(options).then((res) => {
                 console.log(res);
             });
 
         }
 
+    }
+
+    initOneSignal(){
+        this.oneSignal.startInit('b225e6d8-cde5-4fbf-bd57-7fe7cb449727', '188398867187');
+
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+
+        this.oneSignal.handleNotificationReceived().subscribe(() => {
+        // do something when notification is received
+        });
+
+        this.oneSignal.handleNotificationOpened().subscribe(() => {
+        // do something when a notification is opened
+        });
+
+        this.oneSignal.endInit();
     }
 
 

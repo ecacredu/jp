@@ -10,7 +10,7 @@ import { BlogPage } from '../blogpage/blogpage';
 import { BlogpostPage } from '../blogpost/blogpost';
 import { ProfilePage } from '../profile/profile';
 import { SearchPipe } from '../../pipes/search';
-import { SocialSharing } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoginPage } from '../login/login';
 import { Storage } from '@ionic/storage';
 import { MyscrollsPage } from '../myscrolls/myscrolls';
@@ -34,7 +34,7 @@ export class SettingsPage {
   public tabs: Tabs;
   public search;
 
-  constructor(public navCtrl: NavController, public platform: Platform, public storage: Storage, public dom: DomSanitizer, public navParams: NavParams, private redditService: RedditService, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController,public socialShare:SocialSharing, public platform: Platform, public storage: Storage, public dom: DomSanitizer, public navParams: NavParams, private redditService: RedditService, public popoverCtrl: PopoverController, public loadingCtrl: LoadingController) {
     // this.getDefaults();
     this.search = navParams.data;
   }
@@ -110,7 +110,7 @@ export class SettingsPage {
       chooserTitle: 'Pick an app'
     }
 
-    SocialSharing.shareWithOptions(options).then((res) => {
+    this.socialShare.shareWithOptions(options).then((res) => {
       console.log(res);
     });
   }
@@ -280,6 +280,9 @@ export class SettingsPage {
     let temp = this.redditService.posts;
     console.log('before filtering' + temp.length);
     temp = this.filterList(this.filterCount).filter((item) => {
+      if(item == undefined){
+        return;
+      }
       return ((item.cityid == undefined || item.cityid == this.redditService.frontCity || this.redditService.frontCity == undefined || this.redditService.frontCity == null || this.redditService.frontCity == '231234234'));
     });
     console.log('After filtering' + temp.length);

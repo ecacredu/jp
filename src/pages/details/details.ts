@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams,ToastController, LoadingController} from 'ionic-angular';
-import { SocialSharing } from 'ionic-native';
+import { SocialSharing } from '@ionic-native/social-sharing';
 import { RedditService } from '../../providers/reddit.service';
 import {DomSanitizer,SafeResourceUrl,} from '@angular/platform-browser';
 
@@ -16,7 +16,7 @@ export class DetailsPage {
     todo:any;
     currentUser:any;
     url:SafeResourceUrl;
-    constructor(public reddit:RedditService,public navCtrl: NavController,public sanitizer:DomSanitizer, public params:NavParams,public storage: Storage,private toastCtrl: ToastController,public loadingCtrl: LoadingController) {
+    constructor(public reddit:RedditService,public navCtrl: NavController,public socialShare:SocialSharing,public sanitizer:DomSanitizer, public params:NavParams,public storage: Storage,private toastCtrl: ToastController,public loadingCtrl: LoadingController) {
 
         this.todo='';
         this.article = params.get("articles");
